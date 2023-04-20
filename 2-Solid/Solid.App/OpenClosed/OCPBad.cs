@@ -1,4 +1,4 @@
-﻿namespace Solid.App.OpenClosed
+﻿namespace Solid.App.OpenClosed.Bad
 {
     public class SalaryCalculator
     {
