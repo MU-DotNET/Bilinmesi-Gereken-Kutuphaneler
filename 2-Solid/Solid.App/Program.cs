@@ -1,9 +1,12 @@
-﻿#region OpenClosed Principle
-
-using Solid.App.OpenClosed.Bad;
+﻿using Solid.App.OpenClosed.Bad;
 using p = Solid.App.OpenClosed.Good;
 using Solid.App.OpenClosed.BestPractice;
-using Solid.App.LiskovSubstition.Bad;
+//using Solid.App.LiskovSubstition.Bad;
+using Solid.App.LiskovSubstition.Good;
+
+#region OpenClosed Principle
+
+
 
 //Solid.App.OpenClosed.Good.SalaryCalculator salaryCalculatorGood = new();
 //Solid.App.OpenClosed.BestPractice.SalaryCalculator salaryCalculatorBestPractice = new();
@@ -31,6 +34,34 @@ using Solid.App.LiskovSubstition.Bad;
 //})}");
 #endregion
 #region Liskov Substition Principle
+#region Bad
+//BasePhone phone = new Iphone();
+
+//phone.Call();
+//phone.TakePhoto();
+
+//phone = new Nokia3310();
+
+//phone.Call();
+//phone.TakePhoto();
+//BasePhone phone;
+//int i = 1;
+
+//if (i == 1)
+//{
+//    phone = new IPhone();
+//    phone.Call();
+//    phone.TakePhoto();
+//}
+//else
+//{
+//    phone = new Nokia3310();
+//    phone.Call();
+//    phone.TakePhoto();
+//}
+
+#endregion
+#region Good
 //BasePhone phone = new Iphone();
 
 //phone.Call();
@@ -47,14 +78,12 @@ if (i == 1)
 {
     phone = new IPhone();
     phone.Call();
-    phone.TakePhoto();
+    ((ITakePhoto)phone).TakePhoto();
 }
 else
 {
     phone = new Nokia3310();
     phone.Call();
-    phone.TakePhoto();
 }
-
-
+#endregion
 #endregion
