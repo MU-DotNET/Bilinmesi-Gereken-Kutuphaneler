@@ -3,6 +3,7 @@ using p = Solid.App.OpenClosed.Good;
 using Solid.App.OpenClosed.BestPractice;
 //using Solid.App.LiskovSubstition.Bad;
 using Solid.App.LiskovSubstition.Good;
+using Solid.App.DependencyInversion.GoodAndBad;
 
 #region OpenClosed Principle
 
@@ -86,4 +87,8 @@ else
     phone.Call();
 }
 #endregion
+#endregion
+#region Dependency Inversion Principle
+ProductService productService = new(new ProductRepositoryFromOracle());
+productService.GetAll().ForEach(product =>Console.WriteLine(product));
 #endregion
