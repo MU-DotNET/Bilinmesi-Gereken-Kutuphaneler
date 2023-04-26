@@ -1,24 +1,29 @@
-﻿using FluentValidationApp.Web.Models;
+﻿using FluentValidation;
+using FluentValidationApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation.Results;
+using FluentValidationApp.Web.FluentValidators;
 
 namespace FluentValidationApp.Web.Controllers
 {
     public class CustomersController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly IValidator<Customer> _customerValidator;
 
-        public CustomersController(AppDbContext context)
+        public CustomersController(AppDbContext context, IValidator<Customer> customerValidator)
         {
             _context = context;
+            _customerValidator = customerValidator;
         }
 
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-              return _context.Customers != null ?
-                          View(await _context.Customers.ToListAsync()) :
-                          Problem("Entity set 'AppDbContext.Customers'  is null.");
+            return _context.Customers != null ?
+                        View(await _context.Customers.ToListAsync()) :
+                        Problem("Entity set 'AppDbContext.Customers'  is null.");
         }
 
         // GET: Customers/Details/5
@@ -52,12 +57,18 @@ namespace FluentValidationApp.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Email,Age,BirthDate")] Customer customer)
         {
-            if (ModelState.IsValid)
+            CustomerValidator customerValidator = new CustomerValidator();
+            customerValidator.Validate(customer);
+
+            ValidationResult result = _customerValidator.Validate(customer);
+
+            if (result.IsValid)
             {
                 _context.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(customer);
         }
 
@@ -151,7 +162,7 @@ namespace FluentValidationApp.Web.Controllers
 
         private bool CustomerExists(int id)
         {
-          return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Customers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
