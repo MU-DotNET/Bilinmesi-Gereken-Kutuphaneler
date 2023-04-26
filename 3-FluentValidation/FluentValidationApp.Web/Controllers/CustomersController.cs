@@ -58,6 +58,13 @@ namespace FluentValidationApp.Web.Controllers
         public async Task<IActionResult> Create([Bind("Name,Email,Age,BirthDate")] Customer customer)
         {
             CustomerValidator customerValidator = new CustomerValidator();
+            AddressValidator addressValidator = new AddressValidator();
+
+            customer.Addresses.ToList().ForEach(a =>
+            {
+                addressValidator.Validate(a);
+            });
+
             customerValidator.Validate(customer);
 
             ValidationResult result = _customerValidator.Validate(customer);
