@@ -28,7 +28,7 @@ namespace AutoMapperApp.Web.Controllers
         [HttpGet]
         public IActionResult MappingOrnek()
         {
-            Customer customer = new() { Id = 1, Name = "Musa", Email = "musauyumaz@hotmail.com", Age = 24 };
+            Customer customer = new() { Id = 1, Name = "Musa", Email = "musauyumaz@hotmail.com", Age = 24, CreditCard = new() { Number = "1234", ValidDate = DateTime.Now } };
             return Ok(_mapper.Map<CustomerDTO>(customer));
         }
 
