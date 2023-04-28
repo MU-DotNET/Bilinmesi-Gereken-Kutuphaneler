@@ -8,7 +8,10 @@ namespace AutoMapperApp.Web.Mappings
     {
         public CustomerProfile()
         {
+            CreateMap<CreditCard, CustomerDTO>();
+
             CreateMap<Customer, CustomerDTO>()
+                .IncludeMembers(c => c.CreditCard)
                 .ForMember(dest => dest.Isim, options => options.MapFrom(c => c.Name))
                 .ForMember(dest => dest.Eposta, options => options.MapFrom(c => c.Email))
                 .ForMember(dest => dest.Yas, options => options.MapFrom(c => c.Age))
