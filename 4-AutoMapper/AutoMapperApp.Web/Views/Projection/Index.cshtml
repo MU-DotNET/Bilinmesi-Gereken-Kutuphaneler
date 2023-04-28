@@ -1,0 +1,12 @@
+﻿@model AutoMapperApp.Web.DTOs.EventDateDTO
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-action="Index" method="post">
+    <input asp-for="Day" placeholder="Day" />
+    <input asp-for="Month" placeholder="Month" />
+    <input asp-for="Year" placeholder="Year" />
+    <input type="submit" value="Kaydet"/>
+</form>
+<h1>@ViewBag.date</h1>
