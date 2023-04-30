@@ -1,4 +1,6 @@
 using Smidge;
+using Smidge.Cache;
+using Smidge.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +26,17 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.UseSmidge(bundle=>
+app.UseSmidge(bundle =>
 {
-    bundle.CreateJs("my-js-bundle", "~/js/");
+    bundle.CreateJs("my-js-bundle", "~/js/")
+    .WithEnvironmentOptions(
+        BundleEnvironmentOptions.
+        Create().
+        ForDebug(builder => builder.EnableCompositeProcessing().
+        EnableFileWatcher().
+        SetCacheBusterType<AppDomainLifetimeCacheBuster>().
+        CacheControlOptions(enableEtag: false, cacheControlMaxAge: 0))
+        .Build());
     bundle.CreateCss("my-css-bundle", "~/css/site.css", "~/lib/bootstrap/dist/css/bootstrap.css", "~/SmidgeApp.Web.styles.css");
 });
 
