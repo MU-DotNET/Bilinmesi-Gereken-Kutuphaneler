@@ -1,4 +1,5 @@
 using Hangfire;
+using HangFire.Web.Services;
 using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHangfire(config => config.UseSqlServerStorage(() => new SqlConnection(builder.Configuration.GetConnectionString("HangFireConnection"))));
 builder.Services.AddHangfireServer();
+
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 
 var app = builder.Build();
