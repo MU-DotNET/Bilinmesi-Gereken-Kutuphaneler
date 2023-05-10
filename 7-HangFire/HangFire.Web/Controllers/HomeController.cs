@@ -34,7 +34,28 @@ namespace HangFire.Web.Controllers
         {
             //Üye kayıt işlemi bu methodda gerçekleşiyor.
             //Yeni üye olan kullanıcınıın user ID al
-            FireAndForgetJobs.EmailSendToUserJob("1234", "Sitemize Hoşgeldiniz.");
+            FireAndForgetJobs.EmailSendToUserJob("capacitorkondansator@gmail.com", "Sitemize Hoşgeldiniz.");
+            return View();
+        }
+
+        public IActionResult PictureSave()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> PictureSave(IFormFile picture)
+        {
+            string newFileName = String.Empty;
+            if (picture != null && picture.Length > 0)
+            {
+                newFileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.FileName);
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/pictures", newFileName);
+
+                using FileStream stream = new(path,FileMode.Create);
+                await picture.CopyToAsync(stream);
+            }
+            string jobId = BackgroundJobs.DelayedJobs.AddWaterMarkJob(newFileName,"www.mysite.com");
+
             return View();
         }
     }
