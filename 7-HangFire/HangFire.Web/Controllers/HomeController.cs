@@ -40,8 +40,10 @@ namespace HangFire.Web.Controllers
 
         public IActionResult PictureSave()
         {
+            RecurringJobs.EmailReport();
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> PictureSave(IFormFile picture)
         {
@@ -51,10 +53,10 @@ namespace HangFire.Web.Controllers
                 newFileName = Guid.NewGuid().ToString() + Path.GetExtension(picture.FileName);
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/pictures", newFileName);
 
-                using FileStream stream = new(path,FileMode.Create);
+                using FileStream stream = new(path, FileMode.Create);
                 await picture.CopyToAsync(stream);
             }
-            string jobId = BackgroundJobs.DelayedJobs.AddWaterMarkJob(newFileName,"www.mysite.com");
+            string jobId = BackgroundJobs.DelayedJobs.AddWaterMarkJob(newFileName, "www.mysite.com");
 
             return View();
         }
