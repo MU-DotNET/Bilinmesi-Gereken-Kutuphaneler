@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,9 +30,19 @@ else
         context.HttpContext.Response.ContentType = "text/plain";
         await context.HttpContext.Response.WriteAsync($"Bir hata var. Durum Kodu: {context.HttpContext.Response.StatusCode}");
     });
+    //app.UseDatabaseErrorPage();
+
 }
 
-app.UseExceptionHandler("/Home/Error");
+app.UseExceptionHandler(context =>
+{
+    context.Run(async page =>
+    {
+        page.Response.StatusCode = 500;
+        page.Response.ContentType = "text/html";
+        await page.Response.WriteAsync($"<html><head><h1>Hata var: {page.Response.StatusCode}</h1></head></html>");
+    });
+});
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
