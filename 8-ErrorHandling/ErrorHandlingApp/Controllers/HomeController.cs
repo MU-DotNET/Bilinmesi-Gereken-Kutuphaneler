@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace ErrorHandlingApp.Controllers
 {
+    [CustomHandleExceptionFilterAttriubute(ErrorPage = "Hata1")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,7 +17,7 @@ namespace ErrorHandlingApp.Controllers
             _logger = logger;
         }
 
-        [CustomHandleExceptionFilterAttriubute]
+        [CustomHandleExceptionFilterAttriubute(ErrorPage ="Hata1")]
         public IActionResult Index()
         {
             //throw new Exception("Veri tabanına bağlanırken bir hata meydana geldi");
@@ -26,7 +27,7 @@ namespace ErrorHandlingApp.Controllers
             int result = value1 / value2;
             return View();
         }
-        [CustomHandleExceptionFilterAttriubute]
+        [CustomHandleExceptionFilterAttriubute(ErrorPage = "Hata2")]
         public IActionResult Privacy()
         {
             throw new FileNotFoundException();
