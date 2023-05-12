@@ -1,13 +1,10 @@
 ﻿using ErrorHandlingApp.Filter;
-using ErrorHandlingApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace ErrorHandlingApp.Controllers
 {
-    [CustomHandleExceptionFilterAttriubute(ErrorPage = "Hata1")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -52,5 +49,6 @@ namespace ErrorHandlingApp.Controllers
         {
             return View();
         }
+
     }
 }

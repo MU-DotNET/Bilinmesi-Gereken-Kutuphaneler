@@ -1,10 +1,13 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
+using ErrorHandlingApp.Filter;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddMvc(options =>
+{
+    options.Filters.Add(new CustomHandleExceptionFilterAttriubute() { ErrorPage = "Hata2" });
+});
 
 var app = builder.Build();
 
