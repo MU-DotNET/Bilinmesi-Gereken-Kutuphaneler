@@ -1,4 +1,5 @@
-﻿using ErrorHandlingApp.Models;
+﻿using ErrorHandlingApp.Filter;
+using ErrorHandlingApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ namespace ErrorHandlingApp.Controllers
             _logger = logger;
         }
 
+        [CustomHandleExceptionFilterAttriubute]
         public IActionResult Index()
         {
             //throw new Exception("Veri tabanına bağlanırken bir hata meydana geldi");
@@ -24,7 +26,7 @@ namespace ErrorHandlingApp.Controllers
             int result = value1 / value2;
             return View();
         }
-
+        [CustomHandleExceptionFilterAttriubute]
         public IActionResult Privacy()
         {
             throw new FileNotFoundException();
@@ -38,6 +40,15 @@ namespace ErrorHandlingApp.Controllers
             IExceptionHandlerPathFeature? exception = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
             ViewBag.path = exception.Path;
             ViewBag.message = exception.Error.Message;
+            return View();
+        }
+
+        public IActionResult Hata1()
+        {
+            return View();
+        }
+        public IActionResult Hata2()
+        {
             return View();
         }
     }

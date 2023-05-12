@@ -34,15 +34,15 @@ else
 
 }
 
-app.UseExceptionHandler(context =>
-{
-    context.Run(async page =>
-    {
-        page.Response.StatusCode = 500;
-        page.Response.ContentType = "text/html";
-        await page.Response.WriteAsync($"<html><head><h1>Hata var: {page.Response.StatusCode}</h1></head></html>");
-    });
-});
+//app.UseExceptionHandler(context =>
+//{
+//    context.Run(async page =>
+//    {
+//        page.Response.StatusCode = 500;
+//        page.Response.ContentType = "text/html";
+//        await page.Response.WriteAsync($"<html><head><h1>Hata var: {page.Response.StatusCode}</h1></head></html>");
+//    });
+//});
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
