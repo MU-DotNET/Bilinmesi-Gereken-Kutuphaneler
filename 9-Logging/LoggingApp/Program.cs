@@ -6,6 +6,7 @@ builder.Services.AddControllersWithViews();
 //builder.Logging.AddEventSourceLogger();
 builder.Logging.AddDebug();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,4 +30,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
+ILogger<Program> logger = app.Services.GetRequiredService<ILogger<Program>>();
+logger.LogInformation("Uygulama ayaða kalkýyor");
 app.Run();
