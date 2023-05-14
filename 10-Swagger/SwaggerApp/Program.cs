@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(gen =>
 {
-    gen.SwaggerDoc("v1", new()
+    gen.SwaggerDoc("productV1", new()
     {
         Version = "V1",
         Title = "Product API",
@@ -21,11 +21,11 @@ builder.Services.AddSwaggerGen(gen =>
         {
             Name = "Musa UYUMAZ",
             Email = "musa.uyumaz73@gmail.com",
-            Url = new("www.musauyumaz.com")
+            Url = new("https://github.com/musauyumaz")
         }
     });
 
-    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName()}.xml";
+    string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
     gen.IncludeXmlComments(xmlPath);
@@ -42,7 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Product API");
+        options.SwaggerEndpoint("/swagger/productV1/swagger.json", "Product API");
     });
 }
 
