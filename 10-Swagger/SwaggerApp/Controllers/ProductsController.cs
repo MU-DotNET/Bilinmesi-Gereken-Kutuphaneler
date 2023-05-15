@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SwaggerApp.Models;
 
@@ -20,7 +15,14 @@ namespace SwaggerApp.Controllers
             _context = context;
         }
 
-        // GET: api/Products
+        /// <summary>
+        /// Bu endpoint tüm ürünleri list olarak geri döner
+        /// </summary>
+        /// <remarks>
+        /// örnek: https://localhost:7295/api/products
+        /// </remarks>
+        /// <returns></returns>
+        [Produces("Application/json")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
@@ -31,7 +33,14 @@ namespace SwaggerApp.Controllers
             return await _context.Products.ToListAsync();
         }
 
-        // GET: api/Products/5
+        /// <summary>
+        /// Bu endpoint verilen id'ye sahip ürünü döner.
+        /// </summary>
+        /// <param name="id">ürünün id'si</param>
+        /// <returns></returns>
+        /// <response code="404">Verilen id sahip ürün bulunamadı</response>
+        /// <response code="200">Verilen id sahip ürün var</response>
+        [Produces("Application/json")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -80,8 +89,16 @@ namespace SwaggerApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Bu endpoint verilen ürün ekler
+        /// </summary>
+        /// <remarks>
+        /// örnek: product json:{"name": "kalem","price" : 20, "category":"kırtasiye"}
+        /// </remarks>
+        /// <param name="product">json product nesnesi</param>
+        /// <returns></returns>
+        [Consumes("application/json")]
+        [Produces("application/json")]
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -122,3 +139,9 @@ namespace SwaggerApp.Controllers
         }
     }
 }
+//{
+//  "name": "string",
+//  "price": 0,
+//  "date": "2023-05-15T14:41:07.997Z",
+//  "category": "string"
+//}
